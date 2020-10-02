@@ -7,7 +7,18 @@ class RegisterForm extends Component {
         super(props);
         this.title = "";
         this.text = "";
-        this.category = "No categories yet"
+        this.category = "No categories yet";
+        this.state = { categories: [] }
+
+        this._newCategories = this._newCategories.bind(this);
+    }
+
+    componentWillUnmount() {
+        this.props.categories.unsubscribe(this._newCategories);
+    }
+
+    _newCategories(categories) {
+        this.setState({ ...this.state, categories })
     }
 
     _handleChangeCategory(event) {
@@ -41,8 +52,8 @@ class RegisterForm extends Component {
                     className="register-form-input">
                     <option>No categories yet</option>
 
-                    {this.props.categories.map(category => {
-                        return <option>{category}</option>
+                    {this.state.categories.map((category, index) => {
+                        return <option key={index} > {category}</option>
                     })}
                 </select>
 

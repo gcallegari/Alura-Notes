@@ -6,10 +6,12 @@ export default class ArrayNotes {
     addNotes(title, text, category) {
         const newNote = new Note(title, text, category);
         this.notes.push(newNote);
+        this.notify();
     }
 
     deleteNotes(index) {
         this.notes.splice(index, 1);
+        this.notify();
     }
 
     subscribe(func) {
@@ -18,7 +20,7 @@ export default class ArrayNotes {
 
     notify() {
         this._subscribers.forEach(func => {
-            func(this.categories);
+            func(this.notes);
         });
     }
 }
